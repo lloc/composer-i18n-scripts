@@ -9,8 +9,9 @@ declare( strict_types=1 );
 
 namespace lloc\ComposerI18nScripts;
 
+use Composer\Command\BaseCommand;
 use Composer\Plugin\Capability\CommandProvider as CommandProviderCapability;
-use lloc\ComposerI18nScripts\Commands\CustomPluginCommand;
+use lloc\ComposerI18nScripts\Commands\MakePotCommand;
 
 /**
  * Class CommandProvider
@@ -20,9 +21,9 @@ class CommandProvider implements CommandProviderCapability {
 	/**
 	 * Returns an array of custom commands.
 	 *
-	 * @return array An array of custom commands.
+	 * @return BaseCommand[] An array of custom commands.
 	 */
-	public function getCommands() {
-		return array( new CustomPluginCommand() );
+	public function getCommands(): array {
+		return array( new MakePotCommand() );
 	}
 }

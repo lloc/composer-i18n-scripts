@@ -15,19 +15,16 @@
             "lloc\\ComposerI18nScripts\\": "src/"
         }
     },
-    "class": "lloc\\ComposerI18nScripts\\ComposerPlugin",
+    "extra": {
+        "class": "lloc\\ComposerI18nScripts\\ComposerPlugin"
+    },
     "minimum-stability": "stable",
     "platform": {
         "php": ">=7.4"
     },
-    "config": {
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "phpstan/extension-installer": true
-        }
-    },
     "require": {
-        "composer-plugin-api": "^2.6"
+        "composer-plugin-api": "^2.6",
+        "symfony/yaml": "^7.3"
     },
     "require-dev": {
         "composer/composer": "^2.8",
@@ -44,5 +41,11 @@
             "@cs",
             "@phpstan"
         ]
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true
+        }
     }
 }

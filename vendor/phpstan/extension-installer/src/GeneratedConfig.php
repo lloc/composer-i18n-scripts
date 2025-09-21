@@ -38,41 +38,13 @@ final class GeneratedConfig
     'version' => '3.3.2',
     'phpstanVersionConstraint' => NULL,
   ),
-  'phpstan/phpstan-mockery' => 
-  array (
-    'install_path' => '/Users/dennis.ploetner/Projects/composer-i18n-scripts/vendor/phpstan/phpstan-mockery',
-    'relative_install_path' => '../../phpstan-mockery',
-    'extra' => 
-    array (
-      'includes' => 
-      array (
-        0 => 'extension.neon',
-      ),
-    ),
-    'version' => '2.0.0',
-    'phpstanVersionConstraint' => '>=2.0.0.0-dev, <3.0.0.0-dev',
-  ),
-  'szepeviktor/phpstan-wordpress' => 
-  array (
-    'install_path' => '/Users/dennis.ploetner/Projects/composer-i18n-scripts/vendor/szepeviktor/phpstan-wordpress',
-    'relative_install_path' => '../../../szepeviktor/phpstan-wordpress',
-    'extra' => 
-    array (
-      'includes' => 
-      array (
-        0 => 'extension.neon',
-      ),
-    ),
-    'version' => 'v2.0.2',
-    'phpstanVersionConstraint' => '>=2.0.0.0-dev, <3.0.0.0-dev',
-  ),
 );
 
 	public const NOT_INSTALLED = array (
 );
 
 	/** @var string|null */
-	public const PHPSTAN_VERSION_CONSTRAINT = '>=2.0.0.0-dev, <3.0.0.0-dev';
+	public const PHPSTAN_VERSION_CONSTRAINT = NULL;
 
 	private function __construct()
 	{
