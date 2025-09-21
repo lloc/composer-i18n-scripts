@@ -1,0 +1,58 @@
+{
+    "name": "lloc/composer-i18n-scripts",
+    "description": "Simplify the internationalization of your WordPress plugin or theme using WP-CLI — powered by Composer.",
+    "type": "composer-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Dennis Ploetner",
+            "email": "re@lloc.de",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "lloc\\ComposerI18nScripts\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "lloc\\ComposerI18nScripts\\": "src/",
+            "lloc\\ComposerI18nScriptsTests\\": "tests/"
+        }
+    },
+    "class": "lloc\\ComposerI18nScripts\\ComposerPlugin",
+    "minimum-stability": "stable",
+    "platform": {
+        "php": ">=7.4"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "require": {
+        "composer-plugin-api": "^2.6"
+    },
+    "require-dev": {
+        "composer/composer": "^2.8",
+        "wp-coding-standards/wpcs": "^3.0",
+        "szepeviktor/phpstan-wordpress": "^2.0",
+        "phpstan/extension-installer": "^1.4",
+        "phpunit/phpunit": "^9.6",
+        "brain/monkey": "^2.0@dev",
+        "phpstan/phpstan-mockery": "^2.0"
+    },
+    "scripts": {
+        "tests": "./vendor/bin/phpunit -c ./phpunit.xml.dist",
+        "tests:coverage": "XDEBUG_MODE=coverage ./vendor/bin/phpunit -c ./phpunit.xml.dist --coverage-html ./tests/coverage",
+        "cs": "./vendor/bin/phpcs .",
+        "cs:fix": "./vendor/bin/phpcbf .",
+        "phpstan": "./vendor/bin/phpstan analyse --memory-limit=1G",
+        "qa": [
+            "@cs",
+            "@phpstan"
+        ]
+    }
+}
