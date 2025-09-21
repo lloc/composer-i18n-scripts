@@ -3,7 +3,7 @@
         'name' => 'lloc/composer-i18n-scripts',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'c0e06917299f039896453e1548da6d05709de82a',
+        'reference' => 'ab6ebad6d7bc30f5c15f33ec8c552d67145a6633',
         'type' => 'composer-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -103,7 +103,7 @@
         'lloc/composer-i18n-scripts' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'c0e06917299f039896453e1548da6d05709de82a',
+            'reference' => 'ab6ebad6d7bc30f5c15f33ec8c552d67145a6633',
             'type' => 'composer-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
