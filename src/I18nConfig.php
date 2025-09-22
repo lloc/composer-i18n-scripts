@@ -9,7 +9,6 @@ declare( strict_types=1 );
 
 namespace lloc\ComposerI18nScripts;
 
-use Symfony\Component\Yaml\Yaml;
 use Composer\Composer;
 
 /**
@@ -17,13 +16,9 @@ use Composer\Composer;
  */
 class I18nConfig {
 
-	public const FILENAME = '.i18n-config.yaml';
-
-	public const DEFAULTS = array(
-		'source'         => '.',
-		'languages_path' => './languages',
-		'domain'         => '',
-	);
+	public const DEFAULT_SOURCE         = '.';
+	public const DEFAULT_LANGUAGES_PATH = 'languages';
+	public const DEFAULT_DOMAIN         = 'messages';
 
 	/**
 	 * Source directory for scanning files.
@@ -54,33 +49,9 @@ class I18nConfig {
 	 * @param string|null $domain Text domain or null for default value.
 	 */
 	private function __construct( ?string $source = null, ?string $languages_path = null, ?string $domain = null ) {
-		$this->source         = $source ?? self::DEFAULTS['source'];
-		$this->languages_path = $languages_path ?? self::DEFAULTS['languages_path'];
-		$this->domain         = $domain ?? self::DEFAULTS['domain'];
-	}
-
-	/**
-	 * Creates an instance of I18nConfig from a YAML file.
-	 *
-	 * @param string $file_name The path to the YAML configuration file.
-	 * @return self An instance of I18nConfig.
-	 */
-	public static function from_file( string $file_name ): self {
-		if ( ! file_exists( $file_name ) ) {
-			return new self();
-		}
-
-		try {
-			$yaml = Yaml::parseFile( $file_name );
-		} catch ( \Throwable $e ) {
-			return new self();
-		}
-
-		return new self(
-			$yaml['source'] ?? null,
-			$yaml['languages'] ?? null,
-			$yaml['domain'] ?? null
-		);
+		$this->source         = $source ?? self::DEFAULT_SOURCE;
+		$this->languages_path = $languages_path ?? self::DEFAULT_LANGUAGES_PATH;
+		$this->domain         = $domain ?? self::DEFAULT_DOMAIN;
 	}
 
 	/**
@@ -98,7 +69,7 @@ class I18nConfig {
 	 * @return string The languages directory path.
 	 */
 	public function languages_path(): string {
-		return $this->languages_path;
+		return trim( $this->languages_path, '/' );
 	}
 
 	/**
@@ -115,19 +86,25 @@ class I18nConfig {
 	 *
 	 * @return string The destination path.
 	 */
-	public function destination(): ?string {
-		$domain = $this->domain();
-
-		if ( empty( $domain ) ) {
-			print_r( $this );
-			return null;
-		}
-
-		return rtrim( $this->languages_path(), '/' ) . '/' . $domain . '.pot';
+	public function destination(): string {
+		return $this->languages_path() . DIRECTORY_SEPARATOR . $this->domain() . '.pot';
 	}
 
 	/**
-	 * Loads the configuration from the default file.
+	 * Gets the path for a specific language translation file.
+	 *
+	 * @param string $locale The language code (e.g., 'de_DE').
+	 *
+	 * @return string The path to the .po file for the specified language.
+	 */
+	public function translation( string $locale ): string {
+		$code = preg_replace( '/[^\w]/', '', $locale );
+
+		return $this->languages_path() . DIRECTORY_SEPARATOR . $this->domain() . '-' . $code . '.po';
+	}
+
+	/**
+	 * Loads the configuration from the plugin or theme using composer.
 	 *
 	 * @param Composer $composer The Composer instance to determine the root directory.
 	 * @return self An instance of I18nConfig.
@@ -135,6 +112,61 @@ class I18nConfig {
 	public static function from_composer( Composer $composer ): self {
 		$root_dir = dirname( $composer->getConfig()->get( 'vendor-dir' ) );
 
-		return self::from_file( $root_dir . '/' . self::FILENAME );
+		$file = $root_dir . '/style.css';
+		if ( file_exists( $file ) ) {
+			return self::from_header( $file );
+		}
+
+		$file = self::find_plugin_file( $root_dir );
+		if ( $file && file_exists( $file ) ) {
+			return self::from_header( $file );
+		}
+
+		return new self();
+	}
+
+	/**
+	 * Loads the configuration from the header of a given file.
+	 *
+	 * @param string $file The file path to read the header from.
+	 * @return self An instance of I18nConfig.
+	 */
+	public static function from_header( string $file ): self {
+        // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- safe usage for local file
+		$contents = file_get_contents( $file );
+
+		if ( ! $contents ) {
+			return new self();
+		}
+
+		preg_match( '/^.*Text Domain:\s*(.+)$/mi', $contents, $domain_match );
+		preg_match( '/^.*Domain Path:\s*(.+)$/mi', $contents, $path_match );
+
+		$domain = isset( $domain_match[1] ) ? trim( $domain_match[1] ) : null;
+		$path   = isset( $path_match[1] ) ? trim( $path_match[1] ) : null;
+
+		return new self( null, $path, $domain );
+	}
+
+	/**
+	 * Attempts to find the main plugin file in the given directory.
+	 *
+	 * @param string $dir The directory to search for the plugin file.
+	 * @return string|null The path to the plugin file if found, null otherwise.
+	 */
+	private static function find_plugin_file( string $dir ): ?string {
+		$basename = basename( $dir );
+
+		$file = $dir . DIRECTORY_SEPARATOR . $basename . '.php';
+		if ( is_file( $file ) ) {
+			return $file;
+		}
+
+		$file = $dir . DIRECTORY_SEPARATOR . 'index.php';
+		if ( is_file( $file ) ) {
+			return $file;
+		}
+
+		return null;
 	}
 }

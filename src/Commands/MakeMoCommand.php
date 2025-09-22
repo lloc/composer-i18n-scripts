@@ -15,21 +15,22 @@ use Symfony\Component\Console\Input\InputInterface;
 /**
  * A custom Composer command.
  */
-class MakePotCommand extends CustomCommand {
+class MakeMoCommand extends CustomCommand {
 
 	/**
 	 * Configures the command.
 	 */
 	protected function configure(): void {
 		$this
-			->setName( 'i18n:make-pot' )
-			->setDescription( 'Generates a .pot file for your plugin or theme.' )
+			->setName( 'i18n:make-mo' )
+			->setDescription( 'Compiles .po files into binary .mo files for your plugin or theme.' )
 			->setHelp(
 				<<<'EOT'
-This command uses WP-CLI to generate a .pot file for your WordPress plugin or theme.
+This command uses WP-CLI to compile all .po files found in your languages directory 
+into their corresponding .mo files.
 
 Example:
-  composer i18n:make-pot
+  composer i18n:make-mo
 
 Configuration is read from the plugin/theme headers.
 EOT
@@ -45,9 +46,8 @@ EOT
 	 */
 	protected function command( I18nConfig $config, InputInterface $input ): string {
 		return sprintf(
-			'wp i18n make-pot %s %s',
-			escapeshellarg( $config->source() ),
-			escapeshellarg( $config->destination() )
+			'wp i18n make-mo %s',
+			escapeshellarg( $config->languages_path() )
 		);
 	}
 }

@@ -15,25 +15,16 @@ use Symfony\Component\Console\Input\InputInterface;
 /**
  * A custom Composer command.
  */
-class MakePotCommand extends CustomCommand {
+class MakePhpCommand extends CustomCommand {
 
 	/**
 	 * Configures the command.
 	 */
 	protected function configure(): void {
 		$this
-			->setName( 'i18n:make-pot' )
-			->setDescription( 'Generates a .pot file for your plugin or theme.' )
-			->setHelp(
-				<<<'EOT'
-This command uses WP-CLI to generate a .pot file for your WordPress plugin or theme.
-
-Example:
-  composer i18n:make-pot
-
-Configuration is read from the plugin/theme headers.
-EOT
-			);
+			->setName( 'i18n:make-php' )
+			->setDescription( '' )
+			->setHelp( '' );
 	}
 
 	/**
@@ -45,9 +36,8 @@ EOT
 	 */
 	protected function command( I18nConfig $config, InputInterface $input ): string {
 		return sprintf(
-			'wp i18n make-pot %s %s',
-			escapeshellarg( $config->source() ),
-			escapeshellarg( $config->destination() )
+			'wp i18n make-php %s',
+			escapeshellarg( $config->languages_path() )
 		);
 	}
 }

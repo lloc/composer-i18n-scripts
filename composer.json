@@ -24,7 +24,7 @@
     },
     "require": {
         "composer-plugin-api": "^2.6",
-        "symfony/yaml": "^7.3"
+        "wp-cli/wp-cli-bundle": "^2.12@dev"
     },
     "require-dev": {
         "composer/composer": "^2.8",
