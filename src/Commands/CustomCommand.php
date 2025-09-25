@@ -11,6 +11,7 @@ namespace lloc\ComposerI18nScripts\Commands;
 
 use Composer\Command\BaseCommand;
 use lloc\ComposerI18nScripts\I18nConfig;
+use lloc\ComposerI18nScripts\ShellRunner;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -19,9 +20,26 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class CustomCommand extends BaseCommand {
 
-
 	public const SUCCESS = 0;
 	public const ERROR   = 1;
+
+	/**
+	 * Exec encapsulation.
+	 *
+	 * @var ShellRunner
+	 */
+	protected ShellRunner $runner;
+
+	/**
+	 * The custom command constructor.
+	 *
+	 * @param ShellRunner $runner The constructor accepts a ShellRunner object.
+	 */
+	public function __construct( ShellRunner $runner ) {
+		parent::__construct();
+
+		$this->runner = $runner;
+	}
 
 	/**
 	 * Returns the command with its parameters so it can be executed.
@@ -51,8 +69,7 @@ abstract class CustomCommand extends BaseCommand {
 
 		$output->writeln( '<info>Running: ' . $command . '</info>' );
 
-        // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec -- this plugin is for local dev environments only
-		exec( $command, $output_lines, $exit_code );
+		$this->runner->exec( $command, $output_lines, $exit_code );
 
 		foreach ( $output_lines as $line ) {
 			$output->writeln( $line );

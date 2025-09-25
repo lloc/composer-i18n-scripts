@@ -23,10 +23,22 @@ class MakePhpCommand extends CustomCommand {
 	protected function configure(): void {
 		$this
 			->setName( 'i18n:make-php' )
-			->setDescription( '' )
-			->setHelp( '' );
-	}
+			->setDescription( 'Generates PHP translation files from .po files for your plugin or theme.' )
+			->setHelp(
+				<<<'EOT'
+This command uses WP-CLI to generate PHP translation files from existing .po files 
+in your languages directory.
 
+The resulting .php files contain translation arrays, which can be used as an alternative 
+to .mo files in certain WordPress or performance-critical setups.
+
+Example:
+  composer i18n:make-php
+
+Configuration is read from the plugin or theme headers.
+EOT
+			);
+	}
 	/**
 	 * Returns the command with its parameters so it can be executed.
 	 *

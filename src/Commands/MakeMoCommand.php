@@ -32,7 +32,7 @@ into their corresponding .mo files.
 Example:
   composer i18n:make-mo
 
-Configuration is read from the plugin/theme headers.
+Configuration is read from the plugin or theme headers.
 EOT
 			);
 	}

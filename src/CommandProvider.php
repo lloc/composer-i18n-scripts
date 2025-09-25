@@ -29,13 +29,15 @@ class CommandProvider implements CommandProviderCapability {
 	 * @return BaseCommand[] An array of custom commands.
 	 */
 	public function getCommands(): array {
+        $runner = new ShellRunner();
+
 		return array(
-			new CreatePoCommand(),
-			new MakeJsonCommand(),
-			new MakeMoCommand(),
-			new MakePhpCommand(),
-			new MakePotCommand(),
-			new UpdatePoCommand(),
+			new CreatePoCommand($runner),
+			new MakeJsonCommand($runner),
+			new MakeMoCommand($runner),
+			new MakePhpCommand($runner),
+			new MakePotCommand($runner),
+			new UpdatePoCommand($runner),
 		);
 	}
 }

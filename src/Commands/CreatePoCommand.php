@@ -34,7 +34,8 @@ Usage:
   composer i18n:create-po de_DE
 
 The language code (e.g., de_DE, fr_FR) is required.
-Configuration is read from .composer-i18n-scripts.yml or plugin/theme headers.
+
+Configuration is read from the plugin or theme headers.
 EOT
 			)
 			->addArgument(

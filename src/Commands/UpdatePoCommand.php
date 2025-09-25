@@ -23,8 +23,21 @@ class UpdatePoCommand extends CustomCommand {
 	protected function configure(): void {
 		$this
 			->setName( 'i18n:update-po' )
-			->setDescription( '' )
-			->setHelp( '' );
+			->setDescription( 'Updates existing .po files using the latest .pot template.' )
+			->setHelp(
+				<<<'EOT'
+This command uses WP-CLI to update all .po files in your languages directory 
+based on the current .pot template file.
+
+It preserves existing translations while merging any new or updated strings 
+from the .pot file.
+
+Example:
+  composer i18n:update-po
+
+Configuration is read from the plugin or theme headers.
+EOT
+			);
 	}
 
 	/**

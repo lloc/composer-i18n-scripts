@@ -23,8 +23,21 @@ class MakeJsonCommand extends CustomCommand {
 	protected function configure(): void {
 		$this
 			->setName( 'i18n:make-json' )
-			->setDescription( '' )
-			->setHelp( '' );
+			->setDescription( 'Generates JSON translation files for JavaScript internationalization.' )
+			->setHelp(
+				<<<'EOT'
+This command uses WP-CLI to generate .json translation files for your WordPress plugin or theme, 
+typically used for JavaScript i18n support.
+
+It scans the configured source directory for JavaScript translation functions and outputs the 
+resulting .json files into the languages directory.
+
+Example:
+  composer i18n:make-json
+
+Configuration is read from the plugin or theme headers.
+EOT
+			);
 	}
 
 	/**

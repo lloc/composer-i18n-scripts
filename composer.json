@@ -15,6 +15,11 @@
             "lloc\\ComposerI18nScripts\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "lloc\\ComposerI18nScriptsTests\\": "tests/"
+        }
+    },
     "extra": {
         "class": "lloc\\ComposerI18nScripts\\ComposerPlugin"
     },
@@ -29,7 +34,8 @@
     "require-dev": {
         "composer/composer": "^2.8",
         "wp-coding-standards/wpcs": "^3.0",
-        "phpstan/extension-installer": "^1.4"
+        "phpstan/extension-installer": "^1.4",
+        "phpunit/phpunit": "^12.3"
     },
     "scripts": {
         "tests": "./vendor/bin/phpunit -c ./phpunit.xml.dist",

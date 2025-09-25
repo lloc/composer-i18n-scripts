@@ -31,7 +31,7 @@ This command uses WP-CLI to generate a .pot file for your WordPress plugin or th
 Example:
   composer i18n:make-pot
 
-Configuration is read from the plugin/theme headers.
+Configuration is read from the plugin or theme headers.
 EOT
 			);
 	}
