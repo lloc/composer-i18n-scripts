@@ -69,7 +69,10 @@ abstract class CustomCommand extends BaseCommand {
 
 		$output->writeln( '<info>Running: ' . $command . '</info>' );
 
-		$this->runner->exec( $command, $output_lines, $exit_code );
+        $output_lines = [];
+        $exit_code = 0;
+
+        $this->runner->exec( $command, $output_lines, $exit_code );
 
 		foreach ( $output_lines as $line ) {
 			$output->writeln( $line );

@@ -1,4 +1,6 @@
 .idea/
-composer.lock
 .phpcs.cache
+.phpunit.cache
+composer.lock
+tests/coverage
 vendor/
