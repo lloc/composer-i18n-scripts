@@ -18,6 +18,8 @@ use Symfony\Component\Console\Input\InputInterface;
  */
 class CreatePoCommand extends CustomCommand {
 
+    const DEFAULT_LANGUAGE = 'invalid_LOCALE';
+
 	/**
 	 * Configures the command.
 	 */
@@ -54,6 +56,9 @@ EOT
 	 */
 	protected function command( I18nConfig $config, InputInterface $input ): string {
 		$locale = $input->getArgument( 'locale' );
+        if ( empty( $locale ) || ! is_string( $locale ) ) {
+            $locale = self::DEFAULT_LANGUAGE;
+        }
 
 		return sprintf(
 			'if [ ! -e %1$s ]; then cp %2$s %1$s; fi',
